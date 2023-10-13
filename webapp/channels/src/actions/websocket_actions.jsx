@@ -981,6 +981,7 @@ function handleGroupAddedEvent(msg) {
 }
 
 function handleUserAddedEvent(msg) {
+    console.log("USER ADDED WEBSOCKET EVENT", msg)
     return async (doDispatch, doGetState) => {
         const state = doGetState();
         const config = getConfig(state);
@@ -988,6 +989,7 @@ function handleUserAddedEvent(msg) {
         const isTimezoneEnabled = config.ExperimentalTimezone === 'true';
         const currentChannelId = getCurrentChannelId(state);
         if (currentChannelId === msg.broadcast.channel_id) {
+            console.log("YES, Update!", {id: msg.broadcast.channel_id, user_id: msg.data.user_id});
             doDispatch(getChannelStats(currentChannelId));
             doDispatch({
                 type: UserTypes.RECEIVED_PROFILE_IN_CHANNEL,
@@ -1076,6 +1078,8 @@ export function handleUserRemovedEvent(msg) {
         }
     } else if (msg.broadcast.channel_id === currentChannel.id) {
         dispatch(getChannelStats(currentChannel.id));
+        // Event when user is deleted.
+        console.log("USER REMOVED:", {id: msg.broadcast.channel_id, user_id: msg.data.user_id});
         dispatch({
             type: UserTypes.RECEIVED_PROFILE_NOT_IN_CHANNEL,
             data: {id: msg.broadcast.channel_id, user_id: msg.data.user_id},

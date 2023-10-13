@@ -286,7 +286,7 @@ export default class ChannelInviteModal extends React.PureComponent<Props, State
 
     public handleSubmit = (): void => {
         const {actions, channel} = this.props;
-
+        console.log("SUBMIT CLICKED!")
         const userIds = this.state.selectedUsers.map((u) => u.id);
         if (userIds.length === 0) {
             return;
@@ -305,6 +305,7 @@ export default class ChannelInviteModal extends React.PureComponent<Props, State
         this.setState({saving: true});
 
         actions.addUsersToChannel(channel.id, userIds).then((result: any) => {
+            console.log("RESULT: ", result);
             if (result.error) {
                 this.handleInviteError(result.error);
             } else {

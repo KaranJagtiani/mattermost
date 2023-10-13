@@ -6,6 +6,7 @@ package api4
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -1674,12 +1675,17 @@ func updateChannelMemberNotifyProps(c *Context, w http.ResponseWriter, r *http.R
 }
 
 func addChannelMember(c *Context, w http.ResponseWriter, r *http.Request) {
+
 	c.RequireChannelId()
 	if c.Err != nil {
 		return
 	}
 
+	c.Logger.Warn("addChannelMember HIT!!")
+
 	props := model.StringInterfaceFromJSON(r.Body)
+
+	fmt.Printf("PROPS!!: %v\n", props)
 	userId, ok := props["user_id"].(string)
 	if !ok || !model.IsValidId(userId) {
 		c.SetInvalidParam("user_id")
@@ -1697,6 +1703,7 @@ func addChannelMember(c *Context, w http.ResponseWriter, r *http.Request) {
 	}
 
 	postRootId, ok := props["post_root_id"].(string)
+	fmt.Println("props['post_root_id']: ", postRootId)
 	if ok && postRootId != "" && !model.IsValidId(postRootId) {
 		c.SetInvalidParam("post_root_id")
 		return
@@ -1792,9 +1799,12 @@ func addChannelMember(c *Context, w http.ResponseWriter, r *http.Request) {
 		PostRootID:      postRootId,
 	})
 	if err != nil {
+		fmt.Println("Error adding channel member: ", err)
 		c.Err = err
 		return
 	}
+
+	fmt.Println("HERE postRootId: ", postRootId)
 
 	if postRootId != "" {
 		err := c.App.UpdateThreadFollowForUserFromChannelAdd(c.AppContext, cm.UserId, channel.TeamId, postRootId)

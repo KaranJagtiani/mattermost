@@ -1610,6 +1610,8 @@ func (a *App) AddUserToChannel(c request.CTX, user *model.User, channel *model.C
 	message := model.NewWebSocketEvent(model.WebsocketEventUserAdded, "", channel.Id, "", nil, "")
 	message.Add("user_id", user.Id)
 	message.Add("team_id", channel.TeamId)
+	message.Add("channel_id", channel.Id)
+	fmt.Println("AddUserToChannel - Websocket Pulished")
 	a.Publish(message)
 
 	return newMember, nil
@@ -1635,6 +1637,8 @@ func (a *App) AddChannelMember(c request.CTX, userID string, channel *model.Chan
 	} else {
 		return member, nil
 	}
+
+	fmt.Println("APP Function AddChannelMember", userID, channel.Id, opts)
 
 	var user *model.User
 	var err *model.AppError

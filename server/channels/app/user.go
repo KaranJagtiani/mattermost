@@ -2642,6 +2642,7 @@ func (a *App) UpdateThreadFollowForUser(userID, teamID, threadID string, state b
 }
 
 func (a *App) UpdateThreadFollowForUserFromChannelAdd(c request.CTX, userID, teamID, threadID string) *model.AppError {
+	
 	opts := store.ThreadMembershipOpts{
 		Following:             true,
 		IncrementMentions:     false,
@@ -2694,6 +2695,8 @@ func (a *App) UpdateThreadFollowForUserFromChannelAdd(c request.CTX, userID, tea
 	if jsonErr != nil {
 		return model.NewAppError("UpdateThreadFollowForUserFromChannelAdd", "api.marshal_error", nil, "", http.StatusInternalServerError).Wrap(jsonErr)
 	}
+
+	fmt.Println("UpdateThreadFollowForUserFromChannelAdd: ", string(payload))
 	message.Add("thread", string(payload))
 	message.Add("previous_unread_replies", int64(0))
 	message.Add("previous_unread_mentions", int64(0))

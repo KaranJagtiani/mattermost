@@ -1722,6 +1722,9 @@ export default class Client4 {
     };
 
     addToChannel = (userId: string, channelId: string, postRootId = '') => {
+        console.log('client4.ts addToChannel - post request call')
+        console.log("this.getChannelMembersRoute(channelId)", this.getChannelMembersRoute(channelId))
+        console.log("channelId", channelId)
         this.trackEvent('api', 'api_channels_add_member', {channel_id: channelId});
 
         const member = {user_id: userId, channel_id: channelId, post_root_id: postRootId};
@@ -1732,6 +1735,9 @@ export default class Client4 {
     };
 
     removeFromChannel = (userId: string, channelId: string) => {
+        console.log('client4.ts removeFromChannel - delete request call')
+        console.log("this.getChannelMemberRoute(channelId, userId)", this.getChannelMemberRoute(channelId, userId))
+        console.log("channelId", channelId)
         this.trackEvent('api', 'api_channels_remove_member', {channel_id: channelId});
 
         return this.doFetch<StatusOK>(

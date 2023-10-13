@@ -52,6 +52,7 @@ function removeProfileListFromSet(state: RelationOneToMany<Team, UserProfile>, a
 }
 
 function addProfileToSet(state: RelationOneToMany<Team, UserProfile>, id: string, userId: string) {
+    console.log("addProfileToSet called!", state)
     if (state[id]) {
         // The type definitions for this function expect state[id] to be an array, but we seem to use Sets, so handle
         // both of those just in case

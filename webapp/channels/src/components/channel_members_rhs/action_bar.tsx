@@ -137,7 +137,7 @@ const ActionBar = ({className, channelType, membersCount, canManageMembers, edit
                                 />
                                 <FormattedMessage
                                     id='channel_members_rhs.action_bar.add_button'
-                                    defaultMessage='Add'
+                                    defaultMessage='Add Yee'
                                 />
                             </Button>
                         </>

@@ -1071,6 +1071,7 @@ export function getChannelsMemberCount(channelIds: string[]): ActionFunc {
 }
 
 export function addChannelMember(channelId: string, userId: string, postRootId = ''): ActionFunc {
+    console.log("Inside ChannelActions.addChannelMember, postRootId:", postRootId)
     return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
         let member;
         try {
@@ -1106,6 +1107,7 @@ export function addChannelMember(channelId: string, userId: string, postRootId =
 }
 
 export function removeChannelMember(channelId: string, userId: string): ActionFunc {
+    console.log("Inside ChannelActions.removeChannelMember")
     return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
         try {
             await Client4.removeFromChannel(userId, channelId);
